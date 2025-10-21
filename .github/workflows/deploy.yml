@@ -1,73 +1,45 @@
-# name: Deploy VitePress site to Pages
+name: Deploy VitePress site to Pages
 
-# on:
-#   push:
-#     branches: [main]
-
-#   workflow_dispatch:
-
-# permissions:
-#   contents: read
-#   pages: write
-#   id-token: write
-
-# concurrency:
-#   group: pages
-#   cancel-in-progress: false
-
-# jobs:
-  
-#   build:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Checkout
-#         uses: actions/checkout@v4
-#         with:
-#           fetch-depth: 0 # 如果未启用 lastUpdated，则不需要
-
-#       - name: Setup Node
-#         uses: actions/setup-node@v4
-#         with:
-#           node-version: 22.14.0
-#           cache: npm 
-#       - name: Setup Pages
-#         uses: actions/configure-pages@v4
-#       - name: Install dependencies
-#         run: npm ci 
-#       - name: Build with VitePress
-#         run: npm run docs:build 
-#       - name: Upload artifact
-#         uses: actions/upload-pages-artifact@v3
-#         with:
-#           path: docs/.vitepress/dist
-
-# ...existing code...
-name: deploy VitePress to GitHub Pages
 on:
   push:
-    branches: [ main ]   # 根据你的默认分支改成 main 或 master
+    branches: [main]
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 jobs:
-  build-deploy:
+  
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Use Node.js
+        with:
+          fetch-depth: 0 # 如果未启用 lastUpdated，则不需要
+
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-      - name: Install
-        run: npm ci
-      - name: Build site
-        run: npm run build
-      - name: Deploy to gh-pages
-        uses: peaceiris/actions-gh-pages@v3
+          node-version: 22.14.0
+          cache: npm 
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Install dependencies
+        run: npm ci 
+      - name: Build with VitePress
+        run: npm run docs:build 
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: ./dist
-          nojekyll: true
-# ...existing code...
+          path: docs/.vitepress/dist
 
 
   deploy:
