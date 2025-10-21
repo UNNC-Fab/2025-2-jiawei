@@ -4,7 +4,7 @@ layout: home
 
 hero:
   name: "My Real Project"
-  text: "A Personal Site"
+  text: "A Personal1888 Site"
   tagline: My great project tagline
   actions:
     - theme: brand
